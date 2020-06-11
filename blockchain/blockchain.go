@@ -2,17 +2,18 @@ package blockchain
 
 import (
 	"fmt"
+	"github.com/syndtr/goleveldb/leveldb"
 	. "time"
 )
 
 type BlockChian struct {
 	lastHash Hash
-	blocks   map[Hash]*Block
+	db *leveldb.DB
 }
 
-func NewBlockchain() *BlockChian {
+func NewBlockchain(db *leveldb.DB) *BlockChian {
 	bc := &BlockChian{
-		blocks: map[Hash]*Block{},
+		db: db,
 	}
 	return bc
 }
@@ -25,7 +26,10 @@ return  bc
 }
 func (bc *BlockChian) AddBlock(txs string) *BlockChian {
 b:=NewBlock(bc.lastHash,txs)
-bc.blocks[b.hashCurr]=b
+if bs,err:=BlockSerialize(*b);err!=nil{
+	bc.db.Put([]byte(b.hashCurr),bs,nil)
+}
+
 bc.lastHash=b.hashCurr
 
 	return bc

@@ -12,6 +12,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	defer db.Close()
 	key :="zjy"
 	//if err:=db.Put([]byte(key),[]byte("Blockchain Demo"),nil);err!=nil{
 	//	log.Fatal(err)
@@ -21,5 +22,6 @@ func main() {
 	if err!=nil {
 		log.Fatal(err)
 	}
-	fmt.Println(data)
+	fmt.Println(data,string(data))
+
 }
