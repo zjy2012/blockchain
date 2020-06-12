@@ -3,6 +3,7 @@ package blockchain
 import (
 	"fmt"
 	"github.com/syndtr/goleveldb/leveldb"
+	"github.com/syndtr/goleveldb/leveldb/util"
 	"log"
 	. "time"
 )
@@ -16,7 +17,6 @@ func NewBlockchain(db *leveldb.DB) *BlockChain {
 	bc := &BlockChain{
 		db: db,
 	}
-
 	// 初始化 lastHash
 	// 读取最后的区块哈希
 	data, err := bc.db.Get([]byte("lastHash"), nil)
@@ -52,6 +52,8 @@ func (bc *BlockChain) AddBlock(txs string) *BlockChain {
 	return bc
 
 }
+
+
 func (bc *BlockChain) GetBlock(hash Hash) (*Block, error) {
 	data, err := bc.db.Get([]byte("b_"+hash), nil)
 	if err != nil {
@@ -78,4 +80,13 @@ func (bc *BlockChain) Iterate() {
 		fmt.Println("-----------------------------")
 		hash = b.header.hashPrevBlock
 	}
+}
+func (bc*BlockChain)Clear(){
+   bc.db.Delete([]byte("lastHash"),nil)
+	iter := bc.db.NewIterator(util.BytesPrefix([]byte("b_")), nil)
+	for iter.Next() {
+		bc.db.Delete(iter.Key(), nil)
+	}
+	iter.Release()
+	bc.lastHash=""
 }

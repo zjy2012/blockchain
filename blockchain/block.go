@@ -7,7 +7,7 @@ import (
 )
 
 const nodeVersion = 0
-
+const Hashlen =256
 type Hash = string
 //区块的构造方法
 func NewBlock(prevHash Hash, tsx string) *Block {//当前的交易信息
@@ -58,4 +58,7 @@ func (b *Block) setHashCurr() *Block {
 	headerStr := b.header.stringify()
 	b.hashCurr = fmt.Sprintf("%x", sha256.Sum256([]byte (headerStr)))
 	return b
+}
+func (b*Block)GetBits()int{
+	return b.header.bits
 }
