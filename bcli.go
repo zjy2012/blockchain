@@ -1,13 +1,13 @@
 package main
 
 	import (
-	"blockchain/blockchain"
-	"flag"
-	"fmt"
-	"github.com/syndtr/goleveldb/leveldb"
-	"log"
-	"os"
-	"strings"
+		"blockchain/blockchain"
+		"flag"
+		"fmt"
+		"github.com/syndtr/goleveldb/leveldb"
+		"log"
+		"os"
+		"strings"
 	)
 
 //命令行工具

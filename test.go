@@ -16,7 +16,7 @@ func main() {
 	}
 	defer db.Close()
 	//区块链测试
-	bc:=blockchain.NewBlockchain(db)
+	bc:= blockchain.NewBlockchain(db)
 	bc.AddGensisBlock()
 	bc.
 		AddBlock("first block").
