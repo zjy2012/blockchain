@@ -7,6 +7,7 @@ import (
 	"github.com/syndtr/goleveldb/leveldb"
 	"github.com/syndtr/goleveldb/leveldb/util"
 	"log"
+	"strconv"
 )
 
 type BlockChain struct {
@@ -85,11 +86,18 @@ func (bc *BlockChain) Iterate() {
 			log.Fatalf("Block <%s> is not Valid.",hash)
 			continue
 		}
+		//s1 :=b.GetHashCurr()
+		//s2:=s1[0:4]
+		//s3:=xtob(s2)
+		//i:=len(s2)*4-len(s3)
+		//fmt.Println(i)
+		//fmt.Println(s3)//测试发现应该是+1  不应该是减一
 		fmt.Println("HashCurr", b.GetHashCurr())
 		fmt.Println("Txs", b.GetTxs())
 		fmt.Println("Time", b.GetTime())
 		fmt.Println("HashPrev", b.GetPrevHash())
 		fmt.Println("-----------------------------")
+
 		hash = b.GetPrevHash()
 	}
 }
@@ -101,4 +109,8 @@ func (bc*BlockChain)Clear(){
 	}
 	iter.Release()
 	bc.lastHash=""
+}
+func  xtob (x string)string{
+	base,_:=strconv.ParseInt(x,16,64)
+	return strconv.FormatInt(base,2)
 }

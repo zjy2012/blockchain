@@ -51,7 +51,7 @@ func (p *ProofofWork) Validate() bool{
 	}
 	//比较是否满足难题
 	target := big.NewInt(1)
-	target.Lsh(target, uint(block.Hashlen - p.block.GetBits() - 1)) // left shift
+	target.Lsh(target, uint(block.Hashlen - p.block.GetBits() +1)) // left shift
 	hashInt := new(big.Int)
 	hashInt.SetBytes(hash[:])
 	// 不小于

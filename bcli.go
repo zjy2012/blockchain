@@ -1,14 +1,15 @@
 package main
 
-	import (
-		"blockchain/blockchain"
-		"flag"
-		"fmt"
-		"github.com/syndtr/goleveldb/leveldb"
-		"log"
-		"os"
-		"strings"
-	)
+import (
+	"blockchain/blockchain"
+	"blockchain/wallet"
+	"flag"
+	"fmt"
+	"github.com/syndtr/goleveldb/leveldb"
+	"log"
+	"os"
+	"strings"
+)
 
 //命令行工具
 	func main() {
@@ -48,7 +49,9 @@ package main
 		case "init":
 			bc.Clear()
 			bc.AddGensisBlock()
-
+		case "create wallet":
+		w:=wallet.NewWallet()
+		fmt.Printf("your address %s \n",w.Address)
 		case "help":
 			fallthrough
 
