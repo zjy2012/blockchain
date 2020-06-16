@@ -1,25 +1,27 @@
 package main
 
 import (
-	"blockchain/blockchain"
-	"github.com/syndtr/goleveldb/leveldb"
-	"log"
+	"github.com/tyler-smith/go-bip32"
+	"github.com/tyler-smith/go-bip39"
+	//"github.com/tyler-smith/go-bip32"
+	"fmt"
 )
 
 func main() {
-	//b := blockchain.NewBlock("", "Gensis Block.")
-	//fmt.Println(b)
-	dbpath := "testdb"
-	db,err := leveldb.OpenFile(dbpath, nil)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer db.Close()
-	//区块链测试
-	bc:= blockchain.NewBlockchain(db)
-	bc.AddGensisBlock()
-	bc.
-		AddBlock("first block").
-		AddBlock("second block")
-	bc.Iterate()
+	// Generate a mnemonic for memorization or user-friendly seeds
+	entropy, _ := bip39.NewEntropy(256)
+	mnemonic, _ := bip39.NewMnemonic(entropy)
+	fmt.Println(mnemonic)
+	//生成密钥对
+	seed := bip39.NewSeed(mnemonic, "Secret Passphrase")
+//构建种子，生成主密钥
+	masterKey, _ := bip32.NewMasterKey(seed)
+	//然后再生成公钥
+	publicKey := masterKey.PublicKey()
+	fmt.Println("Private key:",masterKey.String())
+	fmt.Println("Public key:",publicKey.String())
+	userMnemonic :=mnemonic
+	//生成熵
+	userMnemonic, _ = bip39.EntropyFromMnemonic(userMnemonic)
+	userSeed :=bip39.NewSeed(userMnemonic,"Secret Passphrase")
 }
